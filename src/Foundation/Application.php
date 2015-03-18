@@ -234,7 +234,7 @@ class Application extends Container implements ApplicationContract
 	{
 		$this->instance('path', $this->path());
 
-		foreach (['base', 'config'] as $path)
+		foreach (['base', 'config', 'storage'] as $path)
 		{
 			$this->instance('path.' . $path, $this->{$path.'Path'}());
 		}
@@ -269,6 +269,16 @@ class Application extends Container implements ApplicationContract
 	{
 		return $this->basePath . DIRECTORY_SEPARATOR . 'config';
 	}
+
+    /**
+     * Get the path to the application configuration files.
+     *
+     * @return string
+     */
+    public function storagePath()
+    {
+        return $this->basePath . DIRECTORY_SEPARATOR . 'storage';
+    }
 
 	/**
 	 * Set the environment file to be loaded during bootstrapping.

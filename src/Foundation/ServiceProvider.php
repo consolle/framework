@@ -13,6 +13,21 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     ];
 
     /**
+     * Lista de provider para registrar
+     * @var array
+     */
+    protected $providers = [];
+
+    /**
+     * Lista de binds para registrar
+     * @var array
+     */
+    protected $binds = [
+        'files.template' => '\Consolle\IO\Template',
+    ];
+
+
+    /**
      * Create do provider
      * @param \Illuminate\Contracts\Foundation\Application $app
      */
@@ -38,14 +53,17 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     public function register()
     {
+        // Registrar binds
+        foreach ($this->binds as $bindId => $bindClass)
+            $this->app->bind($bindId, $bindClass);
+
         // Registrar providers
-        /*
         foreach ($this->providers as $provider => $classServiceProvider)
         {
             $this->app->singleton($provider, function ($app) use ($classServiceProvider) {
                 return new $classServiceProvider($app);
             });
-        }/**/
+        }
     }
 
     /**

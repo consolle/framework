@@ -31,6 +31,22 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
     public $app;
 
     /**
+     * The bootstrap classes for the application.
+     *
+     * @var array
+     */
+    protected $bootstrappers = [
+        'Consolle\Foundation\Bootstrap\DetectEnvironment',
+        'Consolle\Foundation\Bootstrap\LoadConfiguration',
+        //'Illuminate\Foundation\Bootstrap\ConfigureLogging',
+        //'Illuminate\Foundation\Bootstrap\HandleExceptions',
+        'Consolle\Foundation\Bootstrap\RegisterFacades',
+        //'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
+        'Consolle\Foundation\Bootstrap\RegisterProviders',
+        'Consolle\Foundation\Bootstrap\BootProviders',
+    ];
+
+    /**
      * Constructor
      */
     public function __construct(\Consolle\Foundation\Application $app)
@@ -52,10 +68,24 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
     }
 
     /**
+     * Bootstrap the application for HTTP requests.
+     *
+     * @return void
+     */
+    public function bootstrap()
+    {
+        if ( ! $this->app->hasBeenBootstrapped())
+            $this->app->bootstrapWith($this->bootstrappers);
+        $this->app->loadDeferredProviders();
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {
+        $this->bootstrap();
+
         if (null === $output)
         {
             $formatter = new OutputFormatter(true, []);

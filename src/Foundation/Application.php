@@ -821,7 +821,11 @@ class Application extends Container implements ApplicationContract
 	public function registerCoreContainerAliases()
 	{
 		$aliases = [
-			'app'   => ['Illuminate\Foundation\Application', 'Illuminate\Contracts\Container\Container', 'Illuminate\Contracts\Foundation\Application'],
+			'app'                  => ['Illuminate\Foundation\Application', 'Illuminate\Contracts\Container\Container', 'Illuminate\Contracts\Foundation\Application'],
+            'config'               => ['Illuminate\Config\Repository', 'Illuminate\Contracts\Config\Repository'],
+            'events'               => ['Illuminate\Events\Dispatcher', 'Illuminate\Contracts\Events\Dispatcher'],
+            'files'                => 'Illuminate\Filesystem\Filesystem',
+            'filesystem'           => 'Illuminate\Contracts\Filesystem\Factory',
 		];
 
 		foreach ($aliases as $key => $aliases)

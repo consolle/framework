@@ -3,6 +3,16 @@
 class Error
 {
     /**
+     * @var \Illuminate\Translation\Translator
+     */
+    protected $lang;
+
+    public function __construct(\Illuminate\Translation\Translator $lang)
+    {
+        $this->lang = $lang;
+    }
+
+    /**
      * Gera uma excecao e retorna o Exception
      * @param $msg
      * @return \Exception
@@ -10,8 +20,8 @@ class Error
     public function create($msg)
     {
         // Verificar se mensagem pode ser traduzida pelo sistema da Lang do Laravel
-        if (is_string($msg) && (\Lang::has($msg)))
-            $msg = \Lang::get($msg);
+        if (is_string($msg) && ($this->lang->has($msg)))
+            $msg = $this->lang->get($msg);
 
         // Se msg for um objeto ou array deve fazer um print_r
         if (is_object($msg) || is_array($msg))

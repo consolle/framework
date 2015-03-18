@@ -1,3 +1,7 @@
 The Consolle Framework - About
 
-The Consolle framework is a project to make PHP projects and interactive with console command
+The Consolle framework is a project to make PHP projects and interactive with console command.
+
+Is a project by:
+    Bruno Goncalves
+    https://github.com/consolle/consolle

@@ -25,10 +25,18 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
     public $version = '1.0.0';
 
     /**
+     * Application
+     * @var \Consolle\Foundation\Application
+     */
+    public $app;
+
+    /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(\Consolle\Foundation\Application $app)
     {
+        $this->app = $app;
+
         if (function_exists('ini_set') && extension_loaded('xdebug'))
         {
             ini_set('xdebug.show_exception_trace', false);

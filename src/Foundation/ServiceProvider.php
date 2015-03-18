@@ -24,6 +24,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      */
     protected $binds = [
         'files.template' => '\Consolle\IO\Template',
+        'error'          => '\Consolle\Utils\Error',
     ];
 
 

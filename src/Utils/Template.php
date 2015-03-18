@@ -2,14 +2,36 @@
 
 class Template
 {
-    protected $filters = array();
+    /**
+     * Filters
+     * @var array
+     */
+    protected $filters = [];
+
+    /**
+     * Outpath (target)
+     * @var string
+     */
     protected $outpath = '';
 
+    /**
+     * @var \Consolle\IO\Filesystem
+     */
     protected $files;
 
-    public function __construct(\Consolle\IO\Filesystem $files)
+    /**
+     * @var \Consolle\Utils\Error $error
+     */
+    protected $error;
+
+    /**
+     * @param \Consolle\IO\Filesystem $files
+     * @param \Consolle\Utils\Error $error
+     */
+    public function __construct(\Consolle\IO\Filesystem $files, \Consolle\Utils\Error $error)
     {
         $this->files = $files;
+        $this->error = $error;
     }
 
     /**
@@ -22,15 +44,15 @@ class Template
     public function make($template, $outpath, $renames = array())
     {
         // Verificar se template existe na lista
-        if (\File::exists($template) != true)
-            \Error::make('Template %s not found', $template);
+        if ($this->files->exists($template) != true)
+            $this->error->make('Template %s not found', $template);
 
         $this->outpath = $outpath;
 
         $renames = array_merge(array('.php.txt' => '.php'), $renames);
 
         // Sincronizar arquivos
-        \File::synchronize($template, $outpath, $renames);
+        $this->files->synchronize($template, $outpath, $renames);
 
         return $this;
     }
@@ -43,18 +65,18 @@ class Template
     public function file($file, $target)
     {
         // Verificar se template existe na lista
-        if (\File::exists($file) != true)
-            \Error::make('Template %s não foi encontrado', $file);
+        if ($this->files->exists($file) != true)
+            $this->error->make('Template %s não foi encontrado', $file);
 
         $this->outpath = '';
         $this->filters = array($target);
 
         // Criar diretório destino
-        $path = \File::path($target);
-        \File::force($path);
+        $path = $this->files->path($target);
+        $this->files->force($path);
 
         // Copiar arquivo
-        \File::copy($file, $target);
+        $this->files->copy($file, $target);
 
         return $this;
     }
@@ -89,8 +111,8 @@ class Template
         // Aplicar parâmetro nos filtros
         foreach ($this->filters as $filter_file)
         {
-            if (\File::exists($filter_file) != true)
-                \Error::make('File %s not found', $filter_file);
+            if ($this->files->exists($filter_file) != true)
+                $this->error->make('File %s not found', $filter_file);
 
             $buffer = file_get_contents($filter_file);
             $buffer = str_replace('{{' . $name . '}}', $value, $buffer);

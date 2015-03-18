@@ -7,7 +7,7 @@ class Error
      */
     protected $lang;
 
-    public function __construct((\Illuminate\Contracts\Foundation\Application $app)
+    public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         $this->lang = $app['translator'];
     }

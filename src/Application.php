@@ -26,7 +26,7 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
 
     /**
      * Application
-     * @var \Consolle\Foundation\Application
+     * @var \Illuminate\Contracts\Foundation\Application
      */
     public $app;
 
@@ -49,7 +49,7 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
     /**
      * Constructor
      */
-    public function __construct(\Consolle\Foundation\Application $app)
+    public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         $this->app = $app;
 
@@ -65,6 +65,7 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
 
         ErrorHandler::register();
         parent::__construct($this->title, $this->version);
+        $this->bootstrap();
     }
 
     /**
@@ -84,8 +85,6 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
      */
     public function run(InputInterface $input = null, OutputInterface $output = null)
     {
-        $this->bootstrap();
-
         if (null === $output)
         {
             $formatter = new OutputFormatter(true, []);

@@ -155,6 +155,12 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
      */
     public static function getLogo()
     {
+        // Verificar se foi definido a logo do app
+        $file_logo_app = app_path('logo.txt');
+        if (file_exists($file_logo_app))
+            return file_get_contents($file_logo_app);
+
+        // Logo do framework
         $file_logo = __DIR__ . '/Resources/logo.txt';
         if (file_exists($file_logo))
             return file_get_contents($file_logo);

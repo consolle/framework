@@ -181,6 +181,10 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
         if (('phar:' !== substr(__FILE__, 0, 5)) && (class_exists('\Consolle\Command\MakeCommand')))
             $commands[] = new \Consolle\Command\MakeCommand($this->app);
 
+        // verificar se deve incluir o comando optimize
+        if (('phar:' !== substr(__FILE__, 0, 5)) && (class_exists('\Consolle\Command\OptimizeCommand')))
+            $commands[] = new \Consolle\Command\OptimizeCommand($this->app);
+
         // verificar se deve incluir o comando self:compiler
         //if (class_exists('\Console\Command\CompilerCommand'))
         //    $commands[] = new \Console\Command\CompilerCommand();

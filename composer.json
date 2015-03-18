@@ -15,6 +15,7 @@
         "php": ">=5.3.2",
         "symfony/console": "~2.5",
         "symfony/finder": "~2.2",
+        "symfony/process": "2.6.*",
         "illuminate/config": "5.0.4",
         "illuminate/container": "5.0.4",
         "illuminate/events" : "5.0.4",

@@ -10,7 +10,7 @@ use Symfony\Component\Console\Formatter\OutputFormatter;
 use Consolle\Command;
 use Consolle\Utils\ErrorHandler;
 
-class Application extends BaseApplication
+class Application extends BaseApplication implements \Consolle\Contracts\Kernel
 {
     /**
      * Title Application

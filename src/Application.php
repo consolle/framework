@@ -61,8 +61,9 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
             date_default_timezone_set(@date_default_timezone_get());
 
         ErrorHandler::register();
-        parent::__construct($this->title, $this->version);
         $this->bootstrap();
+
+        parent::__construct($this->title, $this->version);
     }
 
     /**

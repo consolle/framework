@@ -1,0 +1,41 @@
+<?php namespace App\Commands;
+
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
+
+class {{class}} extends \Consolle\Command\Command
+{
+    /**
+     * The console command name.
+     *
+     * @var string
+     */
+    protected $name = '';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Here is a description to command';
+
+    /**
+     * Execute command
+     */
+    public function fire()
+    {
+        //...
+    }
+
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [
+            //['name', InputOption::VALUE_REQUIRED, 'Helo of argument', null],
+        ];
+    }
+}

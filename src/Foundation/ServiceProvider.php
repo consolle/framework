@@ -9,7 +9,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
      * @var array
      */
     protected $instances = [
-        'files'                 => '\NetForce\Framework\IO\Filesystem',
+        'files'      => '\Consolle\IO\Filesystem',
     ];
 
     /**

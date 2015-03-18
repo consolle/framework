@@ -234,7 +234,7 @@ class Application extends Container implements ApplicationContract
 	{
 		$this->instance('path', $this->path());
 
-		foreach (['base', 'config', 'storage'] as $path)
+		foreach (['base', 'config', 'storage', 'lang'] as $path)
 		{
 			$this->instance('path.' . $path, $this->{$path.'Path'}());
 		}
@@ -278,6 +278,16 @@ class Application extends Container implements ApplicationContract
     public function storagePath()
     {
         return $this->basePath . DIRECTORY_SEPARATOR . 'storage';
+    }
+
+    /**
+     * Get the path to the application configuration files.
+     *
+     * @return string
+     */
+    public function langPath()
+    {
+        return $this->basePath . DIRECTORY_SEPARATOR . 'lang';
     }
 
 	/**

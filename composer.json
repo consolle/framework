@@ -19,6 +19,7 @@
         "illuminate/container": "5.0.4",
         "illuminate/events" : "5.0.4",
         "illuminate/filesystem": "5.0.4",
+        "illuminate/translation": "5.0.4",
         "vlucas/phpdotenv": "~1.0"
     },
 

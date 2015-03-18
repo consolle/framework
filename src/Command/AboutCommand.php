@@ -1,5 +1,7 @@
 <?php namespace Consolle\Command;
 
+use Consolle\Application;
+
 class AboutCommand extends Command
 {
     /**
@@ -21,6 +23,10 @@ class AboutCommand extends Command
      */
     public function fire()
     {
+        // Logo
+        $this->output->writeln(Application::getLogo());
+
+        // File about
         $file_about = __DIR__ . '/../Resources/about.txt';
         if (file_exists($file_about))
         {

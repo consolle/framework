@@ -1,5 +1,3 @@
-   ___                      _ _
-  / __\___  _ __  ___  ___ | | | ___
- / /  / _ \| '_ \/ __|/ _ \| | |/ _ \
-/ /__| (_) | | | \__ \ (_) | | |  __/
-\____/\___/|_| |_|___/\___/|_|_|\___|
+The Consolle Framework - About
+
+The Consolle framework is a project to make PHP projects and interactive with console command

@@ -30,6 +30,5 @@
         "files": [
             "src/Foundation/helpers.php"
         ]
-	},
-    "bin": ["console"]
+	}
 }

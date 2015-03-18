@@ -167,7 +167,7 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
     protected function getDefaultCommands()
     {
         $commands   = parent::getDefaultCommands();
-        $commands[] = new Command\AboutCommand();
+        $commands[] = new Command\AboutCommand($this->app);
 
         // Comandos da aplicacao
         $cmds = config('app.commands', []);
@@ -176,6 +176,10 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
             $this->app->bind($cid, $cClass);
             $commands[] = $this->app[$cid];
         }
+
+        // verificar se deve incluir o comando make:command
+        if (('phar:' !== substr(__FILE__, 0, 5)) && (class_exists('\Consolle\Command\MakeCommand')))
+            $commands[] = new \Consolle\Command\MakeCommand($this->app);
 
         // verificar se deve incluir o comando self:compiler
         //if (class_exists('\Console\Command\CompilerCommand'))

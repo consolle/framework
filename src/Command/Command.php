@@ -41,13 +41,19 @@ class Command extends \Symfony\Component\Console\Command\Command
     protected $description;
 
     /**
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    protected $app;
+
+    /**
      * Create a new console command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         parent::__construct($this->name);
+        $this->app = $app;
         $this->setDescription($this->description);
         $this->specifyParameters();
     }

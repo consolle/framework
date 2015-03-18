@@ -15,6 +15,11 @@ class Template
     protected $outpath = '';
 
     /**
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    protected $app;
+
+    /**
      * @var \Consolle\IO\Filesystem
      */
     protected $files;
@@ -25,13 +30,13 @@ class Template
     protected $error;
 
     /**
-     * @param \Consolle\IO\Filesystem $files
-     * @param \Consolle\Utils\Error $error
+     * @param \Illuminate\Contracts\Foundation\Application
      */
-    public function __construct(\Consolle\IO\Filesystem $files, \Consolle\Utils\Error $error)
+    public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
-        $this->files = $files;
-        $this->error = $error;
+        $this->app   = $app;
+        $this->files = $app['files'];
+        $this->error = $app['error'];
     }
 
     /**

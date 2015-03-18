@@ -17,14 +17,24 @@ class MakeCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Create a command.';
+    protected $description = 'Create a command to consolle.';
 
     /**
      * Execute command
      */
     public function fire()
     {
-        $name = $this->argument('name');
+        $name  = $this->argument('name');
+        $class = sprintf('%sCommand', studly_case($name));
+
+        $file_template = __DIR__ . '/../Resources/command.txt';
+        $file_target   = app_path('Commands/' . $class . '.php');
+
+        $template = $this->app['files.template'];
+        $template->file($file_template, $file_target);
+        $template->param('class', $class);
+
+        $this->info(sprintf('Created the command %s', $class));
     }
 
     /**

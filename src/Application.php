@@ -38,10 +38,7 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
     protected $bootstrappers = [
         'Consolle\Foundation\Bootstrap\DetectEnvironment',
         'Consolle\Foundation\Bootstrap\LoadConfiguration',
-        //'Illuminate\Foundation\Bootstrap\ConfigureLogging',
-        //'Illuminate\Foundation\Bootstrap\HandleExceptions',
         'Consolle\Foundation\Bootstrap\RegisterFacades',
-        //'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
         'Consolle\Foundation\Bootstrap\RegisterProviders',
         'Consolle\Foundation\Bootstrap\BootProviders',
     ];
@@ -170,6 +167,14 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
     {
         $commands   = parent::getDefaultCommands();
         $commands[] = new Command\AboutCommand();
+
+        // Comandos da aplicacao
+        $cmds = config('app.commands', []);
+        foreach ($cmds as $cid => $cClass)
+        {
+            $this->app->bind($cid, $cClass);
+            $commands[] = $this->app[$cid];
+        }
 
         // verificar se deve incluir o comando self:compiler
         //if (class_exists('\Console\Command\CompilerCommand'))

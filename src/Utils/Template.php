@@ -5,6 +5,13 @@ class Template
     protected $filters = array();
     protected $outpath = '';
 
+    protected $files;
+
+    public function __construct(\Consolle\IO\Filesystem $files)
+    {
+        $this->files = $files;
+    }
+
     /**
      * Aplicar template
      * @param $template

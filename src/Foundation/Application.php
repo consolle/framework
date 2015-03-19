@@ -846,6 +846,7 @@ class Application extends Container implements ApplicationContract
             'events'               => ['Illuminate\Events\Dispatcher', 'Illuminate\Contracts\Events\Dispatcher'],
             'files'                => 'Illuminate\Filesystem\Filesystem',
             'filesystem'           => 'Illuminate\Contracts\Filesystem\Factory',
+            'log'                  => ['Illuminate\Log\Writer', 'Illuminate\Contracts\Logging\Log', 'Psr\Log\LoggerInterface'],
 		];
 
 		foreach ($aliases as $key => $aliases)

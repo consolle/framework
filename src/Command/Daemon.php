@@ -107,7 +107,10 @@ class Daemon
         $str .= sprintf("Trade: %s\r\n", $e->getTraceAsString());
 
         if ($this->log instanceof \Closure)
-            $this->log($str);
+        {
+            $log = $this->log;
+            $log($str);
+        }
     }
 
     /**

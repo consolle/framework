@@ -1,6 +1,6 @@
 <?php namespace Consolle\Command;
 
-class RestartCommand extends Command
+class StopCommand extends Command
 {
 
 	/**
@@ -8,14 +8,14 @@ class RestartCommand extends Command
 	 *
 	 * @var string
 	 */
-	protected $name = 'restart';
+	protected $name = 'stop';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = "Restart process daemons after their current job";
+	protected $description = "Stop process daemons after their current job";
 
 	/**
 	 * Execute the console command.
@@ -26,6 +26,6 @@ class RestartCommand extends Command
 	{
         $this->app['cache']->forever(Daemon::restartID, time());
 
-		$this->info('Broadcasting restart signal.');
+		$this->info('Broadcasting stop signal.');
 	}
 }

@@ -181,7 +181,7 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
     {
         $commands   = parent::getDefaultCommands();
         $commands[] = new Command\AboutCommand($this->app);
-        $commands[] = new Command\RestartCommand($this->app);
+        $commands[] = new Command\StopCommand($this->app);
 
         // Comandos da aplicacao
         $cmds = config('app.commands', []);

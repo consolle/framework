@@ -17,6 +17,7 @@
         "symfony/finder": "~2.2",
         "symfony/process": "2.6.*",
         "illuminate/config": "5.0.4",
+        "illuminate/cache": "5.0.4",
         "illuminate/container": "5.0.4",
         "illuminate/events" : "5.0.4",
         "illuminate/filesystem": "5.0.4",

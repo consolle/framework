@@ -9,6 +9,8 @@ use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Input\InputArgument;
 
 class Command extends \Symfony\Component\Console\Command\Command
 {
@@ -39,6 +41,12 @@ class Command extends \Symfony\Component\Console\Command\Command
      * @var string
      */
     protected $description;
+
+    /**
+     * Option to run command as daemon
+     * @var bool
+     */
+    protected $daemon = false;
 
     /**
      * @var \Illuminate\Contracts\Foundation\Application
@@ -73,9 +81,12 @@ class Command extends \Symfony\Component\Console\Command\Command
             call_user_func_array(array($this, 'addArgument'), $arguments);
         }
 
-        foreach ($this->getOptions() as $options)
+        // Options (Daemon + Custom)
+        $options = $this->daemon ? $this->getDaemonOptions() : [];
+        $options = array_merge([], $options, $this->getOptions());
+        foreach ($options as $op_item)
         {
-            call_user_func_array(array($this, 'addOption'), $options);
+            call_user_func_array(array($this, 'addOption'), $op_item);
         }
     }
 
@@ -104,7 +115,26 @@ class Command extends \Symfony\Component\Console\Command\Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if ($this->daemon)
+        {
+            if ($this->option('daemon'))
+            {
+                $daemon         = new Daemon($this->app);
+                $daemon->sleep  = $this->option('sleep');
+                $daemon->memory = $this->option('memory');
+
+                $_this = $this;
+
+                $daemon->run(function() use($_this) {
+                    $_this->fire();
+                });
+
+                return true;
+            }
+        }
+
         $this->fire();
+        return true;
     }
 
     /**
@@ -341,7 +371,7 @@ class Command extends \Symfony\Component\Console\Command\Command
      */
     protected function getArguments()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -351,7 +381,21 @@ class Command extends \Symfony\Component\Console\Command\Command
      */
     protected function getOptions()
     {
-        return array();
+        return [];
+    }
+
+    /**
+     * Get the console daemon options.
+     *
+     * @return array
+     */
+    protected function getDaemonOptions()
+    {
+        return [
+            ['daemon', null, InputOption::VALUE_NONE,     'Run the command in daemon mode'],
+            ['sleep',  null, InputOption::VALUE_OPTIONAL, 'Number of seconds to sleep when no job is available', 3],
+            ['memory', null, InputOption::VALUE_OPTIONAL, 'The memory limit in megabytes', 128],
+        ];
     }
 
     /**

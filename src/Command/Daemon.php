@@ -56,7 +56,7 @@ class Daemon
             }
             catch (\Exception $e)
             {
-                // registrar log de erro
+                $this->error($e);
             }
 
             $this->sleep();
@@ -88,6 +88,21 @@ class Daemon
     public function stop()
     {
         die;
+    }
+
+    /**
+     * Register erro
+     * @param \Exception $e
+     */
+    protected function error(\Exception $e)
+    {
+        $str  = "Message: $e->getMessage()\r\n";
+        $str .= "Code: $e->getCode()\r\n";
+        $str .= "File: $e->getFile()\r\n";
+        $str .= "Line: $e->getLine()\r\n";
+        $str .= "Trade: print_f($e->getTrace(), true)\r\n";
+
+        $this->app['log']->error($str);
     }
 
     /**

@@ -108,8 +108,6 @@ class Application extends Container implements ApplicationContract
 
 		$this->registerCoreContainerAliases();
 
-        $this->registerCommonBindings();
-
 		if ($basePath)
             $this->setBasePath($basePath);
 	}
@@ -620,6 +618,8 @@ class Application extends Container implements ApplicationContract
 		array_walk($this->serviceProviders, function($p) {
 			$this->bootProvider($p);
 		});
+
+        $this->registerCommonBindings();
 
 		$this->booted = true;
 

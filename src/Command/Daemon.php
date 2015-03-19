@@ -99,7 +99,7 @@ class Daemon
         $str  = sprintf("Message: %s\r\n", $e->getMessage());
         $str .= sprintf("Code: %s\r\n", $e->getCode());
         $str .= sprintf("File: %s (line: %s)\r\n", $e->getFile(), $e->getLine());
-        $str .= sprintf("Trade: %s\r\n", print_r($e->getTrace()));
+        $str .= sprintf("Trade: %s\r\n", $e->getTraceAsString());
 
         $this->app['log']->error($str);
     }

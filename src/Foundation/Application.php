@@ -108,6 +108,8 @@ class Application extends Container implements ApplicationContract
 
 		$this->registerCoreContainerAliases();
 
+        $this->registerCommonBindings();
+
 		if ($basePath)
             $this->setBasePath($basePath);
 	}
@@ -134,6 +136,16 @@ class Application extends Container implements ApplicationContract
 		$this->instance('app', $this);
 		$this->instance('Illuminate\Container\Container', $this);
 	}
+
+    /**
+     * Register the basic container.
+     *
+     * @return void
+     */
+    protected function registerCommonBindings()
+    {
+        $this->instance('log', new \Illuminate\Log\Writer(new \Monolog\Logger($this->environment()), $this['events']));
+    }
 
 	/**
 	 * Register all of the base service providers.

@@ -277,10 +277,10 @@ class Application extends Container implements ApplicationContract
      */
     public function storagePath()
     {
-        if ($this->storagePath);
+        if ($this->storagePath)
             return $this->storagePath;
 
-        $base = ('phar:' === substr($this->basePath, 0, 5)) ? str_replace('phar://', '', $this->basePath) : $this->basePath;
+        $base = ('phar:' === substr($this->basePath, 0, 5)) ? dirname(str_replace('phar://', '', $this->basePath)) : $this->basePath;
 
         return $this->storagePath ?: $base . DIRECTORY_SEPARATOR . 'storage';
     }

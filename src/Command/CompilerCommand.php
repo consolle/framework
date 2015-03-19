@@ -2,7 +2,6 @@
 
 use Consolle\Application;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class CompilerCommand extends Command
 {
@@ -52,6 +51,14 @@ class CompilerCommand extends Command
         $this->alias       = $this->application->name . '.phar';
         $this->pharFile    = base_path($this->alias);
 
+        $this->info('Compiling Consolle Application');
+        $this->info('Application:');
+        $this->info('Name.....: ' . $this->application->name);
+        $this->info('Title....: ' . $this->application->title);
+        $this->info('version..: ' . $this->application->version);
+        $this->info('output...: ' . $this->pharFile);
+        $this->info('-----------------------------------------------------------');
+
         if (file_exists($this->pharFile))
             unlink($this->pharFile);
 
@@ -73,6 +80,9 @@ class CompilerCommand extends Command
 
         $phar->stopBuffering();
         unset($phar);
+
+        $this->info('-----------------------------------------------------------');
+        $this->info('+ Compiled');
     }
 
     /**
@@ -101,11 +111,13 @@ class CompilerCommand extends Command
     /**
      * Adicionar arquivo do phar
      * @param $phar
-     * @param SplFileInfo $file
+     * @param \SplFileInfo $file
      * @param bool $strip
      */
-    private function addFile(\Phar $phar, SplFileInfo $file, $strip = true)
+    private function addFile(\Phar $phar, \SplFileInfo $file, $strip = true)
     {
+        $this->info('add file: ' . $file->getPathname());
+
         $path    = str_replace(base_path(), '', $file->getRealPath());
         $content = file_get_contents($file);
 
@@ -133,6 +145,8 @@ class CompilerCommand extends Command
      */
     private function addComposerBin(\Phar $phar)
     {
+        $this->info('add file BIN');
+
         $content = file_get_contents(base_path('artisan'));
         $content = preg_replace('{^#!/usr/bin/env php\s*}', '', $content);
         $phar->addFromString('artisan', $content);
@@ -182,6 +196,8 @@ class CompilerCommand extends Command
      */
     private function getStub()
     {
+        $this->info('add file STUB');
+
         $content = file_get_contents(__DIR__ . '/../Resources/compiler_stub.txt');
         $content = str_replace('{{alias}}', $this->alias, $content);
 

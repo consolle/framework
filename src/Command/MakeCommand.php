@@ -33,6 +33,7 @@ class MakeCommand extends Command
         $template = $this->app['files.template'];
         $template->file($file_template, $file_target);
         $template->param('class', $class);
+        $template->param('name', strtolower($name));
 
         $this->info(sprintf('Created the command %s', $class));
     }

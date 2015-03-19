@@ -72,7 +72,7 @@ class LoadConfiguration {
 		{
 			$nesting = $this->getConfigurationNesting($file);
 
-			$files[$nesting.basename($file->getRealPath(), '.php')] = $file->getRealPath();
+			$files[$nesting.basename($file->getPathname(), '.php')] = $file->getPathname();
 		}
 
 		return $files;
@@ -86,7 +86,7 @@ class LoadConfiguration {
 	 */
 	private function getConfigurationNesting(SplFileInfo $file)
 	{
-		$directory = dirname($file->getRealPath());
+		$directory = dirname($file->getPathname());
 
 		if ($tree = trim(str_replace(config_path(), '', $directory), DIRECTORY_SEPARATOR))
 		{

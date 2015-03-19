@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+/*
+ * This file is part of Consolle.
+ *
+ * (c) Bruno Gonçalves <bugotech@gmail.com>
+ *
+ * For the full copyright and license information, please view
+ * the license that is located at the bottom of this file.
+ */
+
+Phar::mapPhar('{{alias}}');
+
+require 'phar://{{alias}}/artisan';
+
+__HALT_COMPILER();

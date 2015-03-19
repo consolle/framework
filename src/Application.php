@@ -13,6 +13,12 @@ use Consolle\Utils\ErrorHandler;
 class Application extends BaseApplication implements \Consolle\Contracts\Kernel
 {
     /**
+     * Name Application
+     * @var string
+     */
+    public $name   = 'consolle';
+
+    /**
      * Title Application
      * @var string
      */
@@ -49,6 +55,7 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
     public function __construct(\Illuminate\Contracts\Foundation\Application $app)
     {
         $this->app = $app;
+        $app->instance('application', $this);
 
         if (function_exists('ini_set') && extension_loaded('xdebug'))
         {
@@ -192,8 +199,8 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
             $commands[] = new \Consolle\Command\OptimizeCommand($this->app);
 
         // verificar se deve incluir o comando self:compiler
-        //if (class_exists('\Console\Command\CompilerCommand'))
-        //    $commands[] = new \Console\Command\CompilerCommand();
+        if (('phar:' !== substr(__FILE__, 0, 5)) && (class_exists('\Consolle\Command\CompilerCommand')))
+            $commands[] = new \Consolle\Command\CompilerCommand($this->app);
 
         // Verificar se deve incluir o comando self:update
         //if ('phar:' === substr(__FILE__, 0, 5))

@@ -119,11 +119,15 @@ class Command extends \Symfony\Component\Console\Command\Command
         {
             if ($this->option('daemon'))
             {
+                $_this = $this;
+
                 $daemon         = new Daemon($this->app);
                 $daemon->sleep  = $this->option('sleep');
                 $daemon->memory = $this->option('memory');
 
-                $_this = $this;
+                $daemon->log = function($msg) use ($this) {
+                    $this->error($msg);
+                };
 
                 $daemon->run(function() use($_this) {
                     $_this->fire();

@@ -30,6 +30,11 @@ class Daemon
     public $sleep = 3;
 
     /**
+     * @var \Closure
+     */
+    public $log;
+
+    /**
      * Construtor
      * @param \Illuminate\Contracts\Foundation\Application $app
      */
@@ -101,7 +106,8 @@ class Daemon
         $str .= sprintf("File: %s (line: %s)\r\n", $e->getFile(), $e->getLine());
         $str .= sprintf("Trade: %s\r\n", $e->getTraceAsString());
 
-        $this->app['log']->error($str);
+        if ($this->log instanceof \Closure)
+            $this->log($str);
     }
 
     /**

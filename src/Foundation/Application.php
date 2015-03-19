@@ -135,16 +135,6 @@ class Application extends Container implements ApplicationContract
 		$this->instance('Illuminate\Container\Container', $this);
 	}
 
-    /**
-     * Register the basic container.
-     *
-     * @return void
-     */
-    protected function registerCommonBindings()
-    {
-        $this->instance('log', new \Illuminate\Log\Writer(new \Monolog\Logger($this->environment()), $this['events']));
-    }
-
 	/**
 	 * Register all of the base service providers.
 	 *
@@ -619,8 +609,6 @@ class Application extends Container implements ApplicationContract
 			$this->bootProvider($p);
 		});
 
-        $this->registerCommonBindings();
-
 		$this->booted = true;
 
 		$this->fireAppCallbacks($this->bootedCallbacks);
@@ -858,7 +846,6 @@ class Application extends Container implements ApplicationContract
             'events'               => ['Illuminate\Events\Dispatcher', 'Illuminate\Contracts\Events\Dispatcher'],
             'files'                => 'Illuminate\Filesystem\Filesystem',
             'filesystem'           => 'Illuminate\Contracts\Filesystem\Factory',
-            'log'                  => ['Illuminate\Log\Writer', 'Illuminate\Contracts\Logging\Log', 'Psr\Log\LoggerInterface'],
 		];
 
 		foreach ($aliases as $key => $aliases)

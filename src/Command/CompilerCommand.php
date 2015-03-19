@@ -116,7 +116,7 @@ class CompilerCommand extends Command
      */
     private function addFile(\Phar $phar, \SplFileInfo $file, $strip = true)
     {
-        $this->info('add file: ' . $file->getPathname());
+        $this->info('add file: ' . str_replace(base_path(), '', $file->getRealPath()));
 
         $path    = str_replace(base_path(), '', $file->getRealPath());
         $content = file_get_contents($file);

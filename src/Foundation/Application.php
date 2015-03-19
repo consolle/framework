@@ -267,7 +267,8 @@ class Application extends Container implements ApplicationContract
 	 */
 	public function configPath()
 	{
-		return $this->basePath . DIRECTORY_SEPARATOR . 'config';
+        $base = ('phar:' === substr($this->basePath, 0, 5)) ? dirname(str_replace('phar://', '', $this->basePath)) : $this->basePath;
+        return $base . DIRECTORY_SEPARATOR . 'config';
 	}
 
     /**
@@ -281,7 +282,6 @@ class Application extends Container implements ApplicationContract
             return $this->storagePath;
 
         $base = ('phar:' === substr($this->basePath, 0, 5)) ? dirname(str_replace('phar://', '', $this->basePath)) : $this->basePath;
-
         return $this->storagePath ?: $base . DIRECTORY_SEPARATOR . 'storage';
     }
 

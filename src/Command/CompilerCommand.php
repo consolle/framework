@@ -114,7 +114,7 @@ class CompilerCommand extends Command
             ->exclude('tests')
             ->exclude('docs')
             ->exclude('storage')
-            ->notName('Compiler.php')
+            ->exclude('config')
             ->in(base_path());
 
         foreach ($finder as $file)

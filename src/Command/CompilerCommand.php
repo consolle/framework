@@ -37,6 +37,12 @@ class CompilerCommand extends Command
     protected $pharFile = '';
 
     /**
+     * Arquivo output do projeto PHAR BAT
+     * @var string
+     */
+    protected $batFile = '';
+
+    /**
      * lista de parametros para ser substituido nos arquivos
      * @var array
      */
@@ -50,13 +56,14 @@ class CompilerCommand extends Command
         $this->application = $this->app['application'];
         $this->alias       = $this->application->name . '.phar';
         $this->pharFile    = base_path($this->alias);
+        $this->batFile     = base_path($this->application->name . '.bat');
 
         $this->info('Compiling Consolle Application');
-        $this->info('Application:');
-        $this->info('Name.....: ' . $this->application->name);
-        $this->info('Title....: ' . $this->application->title);
-        $this->info('version..: ' . $this->application->version);
-        $this->info('output...: ' . $this->pharFile);
+        $this->info('Name.........: ' . $this->application->name);
+        $this->info('Title........: ' . $this->application->title);
+        $this->info('version......: ' . $this->application->version);
+        $this->info('output.......: ' . $this->pharFile);
+        $this->info('BAT.output...: ' . $this->pharFile);
         $this->info('-----------------------------------------------------------');
 
         if (file_exists($this->pharFile))
@@ -81,6 +88,12 @@ class CompilerCommand extends Command
         $phar->stopBuffering();
         unset($phar);
 
+        // BAT
+        $bat_content = $content = file_get_contents(__DIR__ . '/../Resources/win_bat.txt');
+        $bat_content = str_replace('{{alias}}', $this->alias, $bat_content);
+        file_put_contents($this->batFile, $bat_content);
+        $this->info('Gerate BAT file: ' . $this->batFile);
+
         $this->info('-----------------------------------------------------------');
         $this->info('+ Compiled');
     }
@@ -100,7 +113,7 @@ class CompilerCommand extends Command
             ->exclude('Tests')
             ->exclude('tests')
             ->exclude('docs')
-            ->exclude('Autoload')
+            ->exclude('storage')
             ->notName('Compiler.php')
             ->in(base_path());
 

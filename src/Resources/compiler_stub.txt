@@ -10,6 +10,7 @@
  */
 
 Phar::mapPhar('{{alias}}');
+Phar::interceptFileFuncs();
 
 require 'phar://{{alias}}/artisan';
 

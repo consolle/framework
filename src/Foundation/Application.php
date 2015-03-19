@@ -277,7 +277,27 @@ class Application extends Container implements ApplicationContract
      */
     public function storagePath()
     {
-        return $this->basePath . DIRECTORY_SEPARATOR . 'storage';
+        if ($this->storagePath);
+            return $this->storagePath;
+
+        $base = ('phar:' === substr($this->basePath, 0, 5)) ? str_replace('phar://', '', $this->basePath) : $this->basePath;
+
+        return $this->storagePath ?: $base . DIRECTORY_SEPARATOR . 'storage';
+    }
+
+    /**
+     * Set the storage directory.
+     *
+     * @param  string  $path
+     * @return $this
+     */
+    public function useStoragePath($path)
+    {
+        $this->storagePath = $path;
+
+        $this->instance('path.storage', $path);
+
+        return $this;
     }
 
     /**

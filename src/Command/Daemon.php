@@ -96,11 +96,10 @@ class Daemon
      */
     protected function error(\Exception $e)
     {
-        $str  = "Message: $e->getMessage()\r\n";
-        $str .= "Code: $e->getCode()\r\n";
-        $str .= "File: $e->getFile()\r\n";
-        $str .= "Line: $e->getLine()\r\n";
-        $str .= "Trade: print_f($e->getTrace(), true)\r\n";
+        $str  = sprintf("Message: %s\r\n", $e->getMessage());
+        $str .= sprintf("Code: %s\r\n", $e->getCode());
+        $str .= sprintf("File: %s (line: %s)\r\n", $e->getFile(), $e->getLine());
+        $str .= sprintf("Trade: %s\r\n", print_r($e->getTrace()));
 
         $this->app['log']->error($str);
     }

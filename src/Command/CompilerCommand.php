@@ -113,8 +113,8 @@ class CompilerCommand extends Command
             ->exclude('Tests')
             ->exclude('tests')
             ->exclude('docs')
-            ->exclude('storage')
-            ->exclude('config')
+            ->exclude('/storage')
+            ->exclude('/config')
             ->in(base_path());
 
         foreach ($finder as $file)

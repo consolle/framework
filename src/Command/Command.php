@@ -125,8 +125,8 @@ class Command extends \Symfony\Component\Console\Command\Command
                 $daemon->sleep  = $this->option('sleep');
                 $daemon->memory = $this->option('memory');
 
-                $daemon->log = function($msg) use ($this) {
-                    $this->error($msg);
+                $daemon->log = function($msg) use ($_this) {
+                    $_this->error($msg);
                 };
 
                 $daemon->run(function() use($_this) {

@@ -186,6 +186,7 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
         $cmds = config('app.commands', []);
         foreach ($cmds as $cid => $cClass)
         {
+            $cid = sprintf('command.%s', $cid);
             $this->app->bind($cid, $cClass);
             $commands[] = $this->app[$cid];
         }

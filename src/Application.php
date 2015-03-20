@@ -107,6 +107,30 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
         if (version_compare(PHP_VERSION, '5.3.2', '<'))
             $output->writeln('<warning>Consolle only officially supports PHP 5.3.2 and above, you will most likely encounter problems with your PHP '.PHP_VERSION.', upgrading is strongly recommended.</warning>');
 
+
+        // Teste time to update
+        if (defined('PHAR_DEV_WARNING_TIME'))
+        {
+            $commandName = '';
+            if ($name = $input->getFirstArgument())
+            {
+                try
+                {
+                    $commandName = $this->find($name)->getName();
+                }
+                catch (\InvalidArgumentException $e)
+                {
+                }
+            }
+            if ($commandName !== 'self-update' && $commandName !== 'selfupdate')
+            {
+                if (time() > PHAR_DEV_WARNING_TIME)
+                {
+                    $output->writeln(sprintf('<warning>Warning: This development build of %s is over 30 days old. It is recommended to update it by running "%s self-update" to get the latest version.</warning>',  strtolower($this->name), $_SERVER['PHP_SELF']));
+                }
+            }
+        }
+
         // switch working dir
         if ($newWorkDir = $this->getNewWorkingDir($input))
         {

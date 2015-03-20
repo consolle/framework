@@ -225,8 +225,17 @@ class SelfCompilerCommand extends Command
     {
         $this->info('add file STUB');
 
+        // Add warning once the phar is older than 30 days
+        $defineTime = '';
+        if (array_key_exists('package_version', $this->params))
+        {
+            $warningTime = time() + -2 * 86400;
+            $defineTime  = "define('PHAR_DEV_WARNING_TIME', $warningTime);\n";
+        }
+
         $content = file_get_contents(__DIR__ . '/../Resources/compiler_stub.txt');
-        $content = str_replace('{{alias}}', $this->alias, $content);
+        $content = str_replace('{{alias}}',       $this->alias,  $content);
+        $content = str_replace('{{define-time}}', $defineTime,   $content);
 
         return $content;
     }

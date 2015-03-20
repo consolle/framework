@@ -12,6 +12,8 @@
 Phar::mapPhar('{{alias}}');
 Phar::interceptFileFuncs();
 
+{{define-time}}
+
 require 'phar://{{alias}}/artisan';
 
 __HALT_COMPILER();

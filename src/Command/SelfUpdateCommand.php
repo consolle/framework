@@ -133,7 +133,7 @@ class SelfUpdateCommand extends Command
 
             rename($newFilename, $localFilename);
 
-            return true;
+            return false;
         }
         catch (\Exception $e)
         {

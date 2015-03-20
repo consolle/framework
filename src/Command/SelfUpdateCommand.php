@@ -31,6 +31,7 @@ class SelfUpdateCommand extends Command
 	public function fire()
 	{
         $error        = $this->app['error'];
+        $files        = $this->app['files'];
         $json_file    = base_path('update.json');
         $application  = $this->app['application'];
         $bkpDir       = root_path('backups');
@@ -41,6 +42,9 @@ class SelfUpdateCommand extends Command
         if (file_exists($json_file) != true)
             $error->make('%s update configuration not found', $application->title);
         $json = json_decode(file_get_contents($json_file));
+
+        // Forcar criacao
+        $files->force($bkpDir);
 
         // Check for permissions in local backup
         if (!is_writable($bkpDir))

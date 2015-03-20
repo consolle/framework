@@ -92,7 +92,7 @@ class SelfCompilerCommand extends Command
         // Adicionar arquivo de update
         $file_update = base_path('update.json');
         if (file_exists($file_update))
-            $this->addFile($phar, new \SplFileInfo($file_update, false));
+            $this->addFile($phar, new \SplFileInfo($file_update), false);
 
         $phar->stopBuffering();
         unset($phar);

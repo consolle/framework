@@ -2,6 +2,7 @@
 
 use Consolle\Application;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Process\Process;
 
 class SelfCompilerCommand extends Command
 {
@@ -66,6 +67,9 @@ class SelfCompilerCommand extends Command
         $this->info('BAT.output...: ' . $this->pharFile);
         $this->info('-----------------------------------------------------------');
 
+        // Carregar parâmetros
+        $this->loadGitInfo();
+
         if (file_exists($this->pharFile))
             unlink($this->pharFile);
 
@@ -84,6 +88,11 @@ class SelfCompilerCommand extends Command
 
         // Adicionar arquivo de licenca
         $this->addFile($phar, new \SplFileInfo(base_path('LICENSE')), false);
+
+        // Adicionar arquivo de update
+        $file_update = basename('update.json');
+        if (file_exists($file_update))
+            $this->addFile($phar, new \SplFileInfo($file_update, false));
 
         $phar->stopBuffering();
         unset($phar);
@@ -215,5 +224,28 @@ class SelfCompilerCommand extends Command
         $content = str_replace('{{alias}}', $this->alias, $content);
 
         return $content;
+    }
+
+    /**
+     * Load GIT Info
+     * @throws \RuntimeException
+     */
+    protected function loadGitInfo()
+    {
+        // Carregar versao
+        $process = new Process('git log --pretty="%H" -n1 HEAD', base_path());
+        if ($process->run() != 0)
+            throw new \RuntimeException('Can\'t run git log. You must ensure to run compile from git repository clone and that git binary is available.');
+        $this->params['package_version'] = trim($process->getOutput());
+
+        // Carregar Data de atualizacao
+        $process = new Process('git log -n1 --pretty=%ci HEAD', base_path());
+        if ($process->run() != 0)
+            throw new \RuntimeException('Can\'t run git log. You must ensure to run compile from git repository clone and that git binary is available.');
+
+        $date = new \DateTime(trim($process->getOutput()));
+        $date->setTimezone(new \DateTimeZone('UTC'));
+        $this->versionDate = $date->format('Y-m-d H:i:s');
+        $this->params['release_date'] = trim($process->getOutput());
     }
 }

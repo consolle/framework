@@ -103,12 +103,12 @@ class SelfCompilerCommand extends Command
         file_put_contents($this->batFile, $bat_content);
         $this->info('Gerate BAT file: ' . $this->batFile);
 
-        $this->info('-----------------------------------------------------------');
+        //$this->info('-----------------------------------------------------------');
         $rows = [];
         foreach ($this->params as $k => $v)
             $rows[] = [$k, $v];
         $this->table(['name','value'], $rows);
-        $this->info('-----------------------------------------------------------');
+        //$this->info('-----------------------------------------------------------');
         $this->info('+ Compiled');
     }
 

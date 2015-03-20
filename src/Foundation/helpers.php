@@ -35,7 +35,6 @@ if ( ! function_exists('app_path'))
 	}
 }
 
-
 if ( ! function_exists('base_path'))
 {
 	/**
@@ -48,6 +47,20 @@ if ( ! function_exists('base_path'))
 	{
 		return app()->make('path.base').($path ? '/'.$path : $path);
 	}
+}
+
+if ( ! function_exists('root_path'))
+{
+    /**
+     * Get the path to the base with source or phar.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function root_path($path = '')
+    {
+        return app('path.root') . ($path ? '/'.$path : $path);
+    }
 }
 
 if ( ! function_exists('bcrypt'))

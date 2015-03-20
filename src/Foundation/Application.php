@@ -234,7 +234,7 @@ class Application extends Container implements ApplicationContract
 	{
 		$this->instance('path', $this->path());
 
-		foreach (['base', 'config', 'storage', 'lang'] as $path)
+		foreach (['base', 'root', 'config', 'storage', 'lang'] as $path)
 		{
 			$this->instance('path.' . $path, $this->{$path.'Path'}());
 		}
@@ -260,6 +260,16 @@ class Application extends Container implements ApplicationContract
 		return $this->basePath;
 	}
 
+    /**
+     * Get the path of root
+     *
+     * @return string
+     */
+    public function rootPath()
+    {
+        return ('phar:' === substr($this->basePath, 0, 5)) ? dirname(str_replace('phar://', '', $this->basePath)) : $this->basePath;
+    }
+
 	/**
 	 * Get the path to the application configuration files.
 	 *
@@ -267,8 +277,7 @@ class Application extends Container implements ApplicationContract
 	 */
 	public function configPath()
 	{
-        $base = ('phar:' === substr($this->basePath, 0, 5)) ? dirname(str_replace('phar://', '', $this->basePath)) : $this->basePath;
-        return $base . DIRECTORY_SEPARATOR . 'config';
+        return $this->rootPath() . DIRECTORY_SEPARATOR . 'config';
 	}
 
     /**
@@ -280,9 +289,7 @@ class Application extends Container implements ApplicationContract
     {
         if ($this->storagePath)
             return $this->storagePath;
-
-        $base = ('phar:' === substr($this->basePath, 0, 5)) ? dirname(str_replace('phar://', '', $this->basePath)) : $this->basePath;
-        return $this->storagePath ?: $base . DIRECTORY_SEPARATOR . 'storage';
+        return $this->storagePath ?: $this->rootPath() . DIRECTORY_SEPARATOR . 'storage';
     }
 
     /**

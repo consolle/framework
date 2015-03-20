@@ -229,7 +229,7 @@ class SelfCompilerCommand extends Command
         $defineTime = '';
         if (array_key_exists('package_version', $this->params))
         {
-            $warningTime = time() + -2 * 86400;
+            $warningTime = time() + 30 * 86400;
             $defineTime  = "define('PHAR_DEV_WARNING_TIME', $warningTime);\n";
         }
 

@@ -126,7 +126,7 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
             {
                 if (time() > PHAR_DEV_WARNING_TIME)
                 {
-                    $output->writeln(sprintf('<warning>Warning: This development build of %s is over 30 days old. It is recommended to update it by running "%s self-update" to get the latest version.</warning>',  strtolower($this->name), $_SERVER['PHP_SELF']));
+                    $output->writeln(sprintf('Warning: This development build of %s is over 30 days old. It is recommended to update it by running "%s self-update" to get the latest version.',  strtolower($this->name), $_SERVER['PHP_SELF']));
                 }
             }
         }

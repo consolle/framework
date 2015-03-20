@@ -3,14 +3,14 @@
 use Consolle\Application;
 use Symfony\Component\Finder\Finder;
 
-class CompilerCommand extends Command
+class SelfCompilerCommand extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $name = 'self:compiler';
+    protected $name = 'self-compiler';
 
     /**
      * The console command description.

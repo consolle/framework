@@ -1,5 +1,6 @@
 <?php namespace Consolle\Utils;
 
+use Consolle\PharInfo;
 use Consolle\Utils\TransportException;
 use League\Flysystem\Exception;
 
@@ -302,8 +303,7 @@ class RemoteFilesystem
         $headers = array(
             sprintf(
                 'User-Agent: Consolle/%s (%s; %s; %s)',
-                'source',
-                //Composer::VERSION === '@package_version@' ? 'source' : Composer::VERSION,
+                PharInfo::VERSION === '@package_version@' ? 'source' : PharInfo::VERSION,
                 php_uname('s'),
                 php_uname('r'),
                 $phpVersion

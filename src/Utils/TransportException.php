@@ -1,4 +1,4 @@
-<?php namespace Consolle\utils;
+<?php namespace Consolle\Utils;
 
 /**
  * @author Jordi Boggiano <j.boggiano@seld.be>

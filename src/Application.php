@@ -205,7 +205,7 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
             $commands[] = new \Consolle\Command\SelfCompilerCommand($this->app);
 
         // Verificar se deve incluir o comando self-update
-        //if (('phar:' === substr(__FILE__, 0, 5)) && (class_exists('\Consolle\Command\SelfCompilerCommand')))
+        if (('phar:' === substr(__FILE__, 0, 5)) && (class_exists('\Consolle\Command\SelfCompilerCommand')) && (file_exists(base_path('update.json'))))
             $commands[] = new \Consolle\Command\SelfUpdateCommand($this->app);
 
         return $commands;

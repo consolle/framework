@@ -6,7 +6,6 @@ use League\Flysystem\Exception;
 class RemoteFilesystem
 {
     private $bytesMax;
-    private $originUrl;
     private $fileUrl;
     private $fileName;
     private $retry;
@@ -32,7 +31,6 @@ class RemoteFilesystem
     /**
      * Copy the remote file in local.
      *
-     * @param string $originUrl The origin URL
      * @param string $fileUrl   The file URL
      * @param string $fileName  the local filename
      * @param boolean $progress  Display the progression
@@ -40,24 +38,23 @@ class RemoteFilesystem
      *
      * @return bool true
      */
-    public function copy($originUrl, $fileUrl, $fileName, $progress = true, $options = array())
+    public function copy($fileUrl, $fileName, $progress = true, $options = array())
     {
-        return $this->get($originUrl, $fileUrl, $options, $fileName, $progress);
+        return $this->get($fileUrl, $options, $fileName, $progress);
     }
 
     /**
      * Get the content.
      *
-     * @param string $originUrl The origin URL
      * @param string $fileUrl   The file URL
      * @param boolean $progress  Display the progression
      * @param array $options   Additional context options
      *
      * @return bool|string The content
      */
-    public function getContents($originUrl, $fileUrl, $progress = true, $options = array())
+    public function getContents($fileUrl, $progress = true, $options = array())
     {
-        return $this->get($originUrl, $fileUrl, $options, null, $progress);
+        return $this->get($fileUrl, $options, null, $progress);
     }
 
     /**
@@ -83,7 +80,6 @@ class RemoteFilesystem
     /**
      * Get file content or copy action.
      *
-     * @param string $originUrl         The origin URL
      * @param string $fileUrl           The file URL
      * @param array $additionalOptions context options
      * @param string $fileName          the local filename
@@ -92,10 +88,9 @@ class RemoteFilesystem
      * @throws \Exception
      * @return bool|string
      */
-    protected function get($originUrl, $fileUrl, $additionalOptions = array(), $fileName = null, $progress = true)
+    protected function get($fileUrl, $additionalOptions = array(), $fileName = null, $progress = true)
     {
         $this->bytesMax         = 0;
-        $this->originUrl        = $originUrl;
         $this->fileUrl          = $fileUrl;
         $this->fileName         = $fileName;
         $this->progress         = $progress;
@@ -103,7 +98,7 @@ class RemoteFilesystem
         $this->lastHeaders      = array();
 
 
-        $options = $this->getOptionsForUrl($originUrl, $additionalOptions);
+        $options = $this->getOptionsForUrl($additionalOptions);
 
         if (isset($options['http']))
             $options['http']['ignore_errors'] = true;
@@ -215,13 +210,7 @@ class RemoteFilesystem
         {
             $this->retry = false;
 
-            $result = $this->get($this->originUrl, $this->fileUrl, $additionalOptions, $this->fileName, $this->progress);
-
-            /*
-            $authHelper = new AuthHelper($this->io, $this->config);
-            $authHelper->storeAuth($this->originUrl, $this->storeAuth);
-            $this->storeAuth = false;
-            /**/
+            $result = $this->get($this->fileUrl, $additionalOptions, $this->fileName, $this->progress);
 
             return $result;
         }
@@ -302,7 +291,7 @@ class RemoteFilesystem
         }
     }
 
-    protected function getOptionsForUrl($originUrl, $additionalOptions)
+    protected function getOptionsForUrl($additionalOptions)
     {
         if (defined('HHVM_VERSION')) {
             $phpVersion = 'HHVM ' . HHVM_VERSION;

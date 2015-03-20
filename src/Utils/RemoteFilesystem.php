@@ -183,7 +183,7 @@ class RemoteFilesystem
         }
 
         if ($this->progress && !$this->retry) {
-            $this->log("    Downloading: <comment>100%</comment>");
+            $this->log("    Downloading: 100%");
         }
 
         // handle copy command if download was successful
@@ -281,7 +281,7 @@ class RemoteFilesystem
 
                     if ((0 === $progression % 5) && 100 !== $progression && $progression !== $this->lastProgress) {
                         $this->lastProgress = $progression;
-                        $this->log("    Downloading: <comment>$progression%</comment>");
+                        $this->log("    Downloading: $progression%");
                     }
                 }
                 break;

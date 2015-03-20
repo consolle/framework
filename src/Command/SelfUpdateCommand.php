@@ -55,11 +55,11 @@ class SelfUpdateCommand extends Command
 
         // Check version
         $version_url    = trim($json->url->version);
-        $last_version   = trim($remote->getContents($version_url));
+        $last_version   = trim($remote->getContents($version_url, false));
         $update_version = $this->argument('version') ?: $last_version;
 
         // Validate version sintaxe
-        if (isset($json->versionMask) != true)
+        if (isset($json->versionMask))
         {
             if (preg_match($json->versionMask, $update_version) && $update_version !== $last_version)
             {

@@ -85,7 +85,7 @@ class SelfUpdateCommand extends Command
 
         // Atualizar
         $this->info(sprintf("Updating to version %s.", $update_version));
-        $file_remote = sprintf('%s/%s/%s', trim($json->url->download), $update_version, $project_file);
+        $file_remote = sprintf('%s/%s/%s', trim($json->url->download), $update_version, basename($project_file));
         $remote->copy($file_remote, $temp_file, true);
         if (!file_exists($temp_file))
         {

@@ -101,6 +101,9 @@ class SelfUpdateCommand extends Command
             return true;
         }
 
+        // Disparar evento depois de atualizado
+        \Event::fire('self-update', [$update_version]);
+
         return false;
 	}
 

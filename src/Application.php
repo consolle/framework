@@ -138,6 +138,9 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
             chdir($newWorkDir);
         }
 
+        // Evento running
+        \Event::fire('running', $this->version);
+
         $result = parent::doRun($input, $output);
 
         if (isset($oldWorkingDir))

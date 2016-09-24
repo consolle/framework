@@ -76,8 +76,8 @@ class LoadConfiguration {
 		}
 
         // Verificar se tem um arquivo de configuracao na pasta do pchar
-        $config_root = root_path('/config.php');
-        if ($app['files']->exists($config_root)) {
+        $config_root = root_path('config.php');
+        if (file_exists($config_root)) {
             $files['config'] = $config_root;
         }
 

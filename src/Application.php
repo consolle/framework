@@ -104,8 +104,8 @@ class Application extends BaseApplication implements \Consolle\Contracts\Kernel
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        if (version_compare(PHP_VERSION, '5.3.2', '<'))
-            $output->writeln('<warning>Consolle only officially supports PHP 5.3.2 and above, you will most likely encounter problems with your PHP '.PHP_VERSION.', upgrading is strongly recommended.</warning>');
+        if (version_compare(PHP_VERSION, '5.6.4', '<'))
+            $output->writeln('<warning>Consolle only officially supports PHP 5.6.4 and above, you will most likely encounter problems with your PHP '.PHP_VERSION.', upgrading is strongly recommended.</warning>');
 
 
         // Teste time to update
